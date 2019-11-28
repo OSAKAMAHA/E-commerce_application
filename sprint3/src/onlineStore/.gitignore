@@ -42,3 +42,6 @@
 /users_handler.class
 /orderController.class
 /clientWindow.class
+/adminStatisticsController.class
+/AstatisticsHandler.class
+/statisticsAddWindow.class

@@ -10,7 +10,8 @@ public class AdminWindow {
 		System.out.println("1.add product");
 		System.out.println("2.add brand");
 		System.out.println("3.view pending approves");
-		System.out.println("4.exit");
+		System.out.println("4.add statistics");
+		System.out.println("5.exit");
 		System.out.println("Enter the number of your choice.");
 		Scanner sc = new Scanner(System.in);
 		String choice = sc.nextLine();
@@ -25,6 +26,9 @@ public class AdminWindow {
 			pendingStoreWindow swin = new pendingStoreWindow();
 		break;
 		case "4":
+			statisticsAddWindow sswin = new statisticsAddWindow (current);
+		break;
+		case "5":
 			System.exit(0);
 		break;
 		default:
