@@ -18,6 +18,8 @@ public class userWindowOpener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}else {
+			clientWindow windo = new clientWindow((client) User);
 		}
 	}
 }

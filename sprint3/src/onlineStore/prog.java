@@ -24,11 +24,5 @@ public class prog {
 			System.out.println("non valid choice");
 			System.exit(0);
 		}
-		System.out.println("welcome " + current.getName());
-		if(current instanceof admin) {
-			AdminWindow win= new AdminWindow((admin) current);
-		}else if(current instanceof business) {
-			businessWindow wind = new businessWindow((business) current);
-		}
 	}
 }
