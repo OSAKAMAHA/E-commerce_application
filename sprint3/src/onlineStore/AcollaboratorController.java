@@ -24,7 +24,7 @@ public class AcollaboratorController {
 	}
 	public String AddCollaborator(String choice,String username) throws ClassNotFoundException, SQLException {
 		int store = Integer.parseInt(choice);
-		int storeID = ch.getStoreID(stores.get(store));
+		int storeID = ch.getStoreID(stores.get(store-1));
 		int colID = ch.getUserID(username);
 		if(colID == -1) {
 			return "user doesn't exist \n";

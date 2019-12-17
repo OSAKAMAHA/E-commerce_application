@@ -42,7 +42,7 @@ public class productHandler {
 	    return db.rs.getInt("ID");
 	}
 	public ArrayList<store> getStores(business owner) {
-		String q = "select * from store inner join collaborators on collaborators.collaboratorID = store.ID inner join users on users.ID = collaborators.collaboratorID where users.username = '"+owner.getLoginInfo().getUsername()+"' ";
+		String q = "select * from store inner join collaborators on collaborators.storeID = store.ID inner join users on users.ID = collaborators.collaboratorID where users.username = '"+owner.getLoginInfo().getUsername()+"' ";
 		ArrayList<store> ownerstores = new ArrayList<store>();
 		try {
 			db.rs = db.st.executeQuery(q);
@@ -54,7 +54,7 @@ public class productHandler {
 			while(db.rs.next()) {
 				store s = new store();
 				s.setStoreName(db.rs.getString("name"));
-			    s.setOwnerName(db.rs.getString("ownerUser"));
+			    s.setOwnerName(db.rs.getString("username"));
 			    s.setLocation(db.rs.getString("location"));
 			    s.setType(db.rs.getString("type"));
 			    ownerstores.add(s);
@@ -79,9 +79,9 @@ public class productHandler {
 	}
 	public void  addproductToStore(product p,int storeID) throws SQLException, ClassNotFoundException{
 		int productID = getProductID(p.getPp().getName());
-		String q = "insert into productStore values(" +productID+  
+		String q = "SET IDENTITY_INSERT productStore ON insert into productStore (productID,storeID,quantity,brandID,views,price) values(" +productID+  
 	            ", " +storeID+ ", " +p.getQuantity()+", " +p.getBrand().getID()+", " +0+", " +p.getPrice()+ ")";
-		int x = db.st.executeUpdate(q);
+		db.st.executeUpdate(q);
 		
 	};
 }

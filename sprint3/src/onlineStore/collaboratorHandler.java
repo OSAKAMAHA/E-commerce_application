@@ -48,7 +48,7 @@ public class collaboratorHandler {
 			while(db.rs.next()) {
 				store s = new store();
 				s.setStoreName(db.rs.getString("name"));
-			    s.setOwnerName(db.rs.getString("ownerUser"));
+			    s.setOwnerName(db.rs.getString("username"));
 			    s.setLocation(db.rs.getString("location"));
 			    s.setType(db.rs.getString("type"));
 			    ownerstores.add(s);

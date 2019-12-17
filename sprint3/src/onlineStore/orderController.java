@@ -19,8 +19,8 @@ public class orderController {
 		int i = 1;
 		String output = "";
 		for(int j = 0;j<prods.size();j++) {
-			if(prods.get(i).getQuantity()>0) {
-				output+=i +". "+prods.get(i).getPp().getName()+"    "+prods.get(i).getPrice()+"    "+prods.get(i).getBrand().getbName()+ "\n";
+			if(prods.get(j).getQuantity()>0) {
+				output+=i +". "+prods.get(j).getPp().getName()+"    "+prods.get(j).getPrice()+"    "+prods.get(j).getBrand().getbName()+ "\n";
 				i++;
 			}
 		}

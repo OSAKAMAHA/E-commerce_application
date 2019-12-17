@@ -15,11 +15,7 @@ public class registerController {
 	public boolean register(String username,String password,String name,String Email,String DOB,String phone,String country,String Type) throws SQLException {
 		info = new userLoginInfo(username,Email,password);
 		if(uh.userNameAvailable(username)) {
-			User = uh.addUser(info, name, DOB, phone, country,Type);
-			if(User == null) {
-				return false;
-			}
-			return true;
+			return uh.addUser(info, name, DOB, phone, country,Type);
 		}else {
 		return false;
 		}

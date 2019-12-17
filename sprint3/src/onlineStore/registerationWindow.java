@@ -27,7 +27,6 @@ public class registerationWindow {
 		String country = input.readLine();
 		if(rc.register(username, password, name, Email, DOB, phone, country,regType)) {
 			System.out.println("registered successfully");
-			rc.openWindow();
 		}else {
 			System.out.println("unable to register please try another username or make sure that all the fields were filled in the right way");
 		}

@@ -27,19 +27,14 @@ public class users_handler {
 		 return false;
 	 }
 }
-public user addUser(userLoginInfo info,String name,String DOB,String phone, String country,String Type) throws  SQLException {
-		current.setLoginInfo(info);
-		current.setName(name);
-		current.setPhone(DOB);
-		current.setDOB(phone);
-		current.setCountry(country);
+public boolean addUser(userLoginInfo info,String name,String DOB,String phone, String country,String Type) throws  SQLException {
 		String q1 = "insert into users values('" +info.getUsername()+ "', '" +info.getPassword()+  
                 "', '" +name+ "', '" +DOB+ "', '" +phone+ "', '" +country+ "', '" +info.getEmail()+ "','" + Type + "')";
 		int x = db.st.executeUpdate(q1); 
         if (x > 0) {             
-        	return current;
+        	return true;
         }else {            
-    		return null;
+    		return false;
         }
 };
 
@@ -52,12 +47,11 @@ public user getUser(userLoginInfo info) throws SQLException{
   	for(int i = 2;i<10;i++) {
   		userinfo.add(db.rs.getString(i));
     }
-  	if(userinfo.get(8).equals("admin")) {
+  	if(userinfo.get(7).equals("admin")) {
 		current = new admin();
 	}else {
 		current = new business();
-		current.setStoreOwner(isStoreOwner(current));
-		current.setStoreCollaborator(isStorecollaborator(current));
+		
 		
 	};
 	//make username and email in their correct place;
@@ -69,15 +63,17 @@ public user getUser(userLoginInfo info) throws SQLException{
 	current.setDOB(userinfo.get(3));
 	current.setPhone(userinfo.get(4));
 	current.setCountry(userinfo.get(5));
-
+	if(current instanceof business) {
+		((business) current).setStoreOwner(isStoreOwner(current));
+		((business) current).setStoreCollaborator(isStorecollaborator(current));
+	}
     return current;
 }
 
 public boolean userNameAvailable(String username) throws SQLException {
-	    String s = "select count(*) from select username from admin where username = '"+username+"'";     
+	    String s = "select username from users where username = '"+username+"'";     
 	    db.rs = db.st.executeQuery(s);
-	    db.rs.next();
-	    if(db.rs.getInt(1) > 0) {
+	    if(db.rs.next()) {
 	    	return false;
 	    }else {
 	    	return true;
@@ -85,20 +81,18 @@ public boolean userNameAvailable(String username) throws SQLException {
 	    
 }
 public boolean isStoreOwner(user current) throws SQLException {
-	String s = "select count(*) from (select * from store inner join users on users.ID = store.owner where users.username = '"+current.getLoginInfo().getUsername()+"')";
+	String s = "select * from store inner join users on users.ID = store.owner where users.username = '"+current.getLoginInfo().getUsername()+"'";
 	db.rs = db.st.executeQuery(s);
-    db.rs.next();
-    if(db.rs.getInt(1) > 0) {
+    if(db.rs.next()) {
     	return true;
     }else {
     	return false;
     }
 }
 public boolean isStorecollaborator(user current) throws SQLException {
-	String s = "select count(*) from (select * from collaborators inner join users on users.ID = collaborators.collaboratorID where users.username = '"+current.getLoginInfo().getUsername()+"')";
+	String s = "select * from collaborators inner join users on users.ID = collaborators.collaboratorID where users.username = '"+current.getLoginInfo().getUsername()+"'";
 	db.rs = db.st.executeQuery(s);
-    db.rs.next();
-    if(db.rs.getInt(1) > 0) {
+    if(db.rs.next()) {
     	return true;
     }else {
     	return false;

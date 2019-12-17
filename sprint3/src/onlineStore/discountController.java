@@ -8,10 +8,9 @@ public class discountController {
 	String output;
 	private boolean boughtBefore() throws ClassNotFoundException, SQLException {
 		dataBaseConnection db = new dataBaseConnection();
-		String q = "select count * from(select * from orders where orderedproductID = "+pro.getID()+"and ownerUserName = '"+current.getLoginInfo().getUsername()+"')";
+		String q = "select * from orders where orderedproductID = "+pro.getID()+"and ownerUserName = '"+current.getLoginInfo().getUsername()+"'";
 		db.rs = db.st.executeQuery(q);
-	    db.rs.next();
-	    if(db.rs.getInt(1) > 0) {
+	    if(db.rs.next()) {
 	    	return true;
 	    }else {
 	    	return false;

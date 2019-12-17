@@ -28,17 +28,18 @@ public class orderHandler {
 		try {
 			while(db.rs.next()) {
 				product s = new product();
-				s.getPp().setName(db.rs.getString(7));
-				s.getPp().setCategory(db.rs.getString(8));
-				s.getPp().setType(db.rs.getString(9));
+				s.getPp().setName(db.rs.getString(8));
+				s.getPp().setCategory(db.rs.getString(9));
+				s.getPp().setType(db.rs.getString(10));
 				s.setID(db.rs.getInt("productID"));
 				s.setStoreID(db.rs.getInt("storeID"));
 				s.setPrice(db.rs.getInt("price"));
 				s.setQuantity(db.rs.getInt("quantity"));
 				s.setViews(db.rs.getInt("views"));
-				s.getBrand().setbName(db.rs.getString(11));
-				s.getBrand().setbCatagry(db.rs.getString(12));
-			    prods.add(s);
+				s.getBrand().setbName(db.rs.getString(12));
+				s.getBrand().setbCatagry(db.rs.getString(13));
+				if(s.getQuantity() > 0)
+					prods.add(s);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -47,7 +48,7 @@ public class orderHandler {
 		return prods;
 	}
 	public void updateViews(product prod) {
-		String q="update productSrore set views = views+1 where productID = "+prod.getID()+" and storeID = "+prod.getStoreID();
+		String q="update productStore set views = views+1 where productID = "+prod.getID()+" and storeID = "+prod.getStoreID();
 		int x = 0;
 		try {
 			x = db.st.executeUpdate(q);
@@ -57,7 +58,7 @@ public class orderHandler {
 		}
 	}
 	public void updateQuantity(Order order) {
-		String q="update productStore set quantity = quanitity-"+order.getAmmount()+" where productID = "+order.getProduct().getID()+" and storeID = "+order.getProduct().getStoreID();
+		String q="update productStore set quantity = quantity-"+order.getAmmount()+" where productID = "+order.getProduct().getID()+" and storeID = "+order.getProduct().getStoreID();
 		int x = 0;
 		try {
 			x = db.st.executeUpdate(q);
