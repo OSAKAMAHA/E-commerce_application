@@ -126,7 +126,7 @@ public class updateHandler {
 			int quantity = db.rs.getInt("quantity");
 			int brandID = db.rs.getInt("brandID");
 			int price = db.rs.getInt("price");
-			String q = "UPDATE productStore quantity = "+quantity+" , brandID = "+brandID+" , price = "+price+" where productID= "+productID+" and storeID = "+storeID; 
+			String q = "UPDATE productStore set quantity = "+quantity+" , brandID = "+brandID+" , price = "+price+" where productID= "+productID+" and storeID = "+storeID; 
 			db.st.executeUpdate(q);
 			q = "DELETE FROM oldproducts WHERE updateID = "+updateID;
 			db.st.executeUpdate(q);

@@ -7,7 +7,7 @@ public class storeCollaboratorWindow {
 	storeCollaboratorWindow(business current) throws ClassNotFoundException, SQLException{
 		while(true) {
 			System.out.println("1.add a new store");
-			System.out.println("2.add product to store");
+			System.out.println("2.modify store products");
 			System.out.println("3.buy a product");
 			System.out.println("4.exit");
 			System.out.println("Enter the number of your choice.");

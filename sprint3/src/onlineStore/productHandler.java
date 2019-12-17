@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class productHandler {
 	business curr;
 	private dataBaseConnection db;
+	
 	productHandler(business curr){
 		try {
 			db = new dataBaseConnection();
@@ -78,6 +79,79 @@ public class productHandler {
 		return b;
 		}
 		return null;
+	}
+	public ArrayList<product> getStoreProducts(int storeID){
+		String q = "select * from productStore inner join product on productstore.productID = product.[ID] inner join brand on productStore.brandID = brand.ID where store.ID = "+storeID;
+		try {
+			db.rs = db.st.executeQuery(q);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ArrayList<product> prods = new ArrayList<product>();
+		try {
+			while(db.rs.next()) {
+				product s = new product();
+				s.getPp().setName(db.rs.getString(8));
+				s.getPp().setCategory(db.rs.getString(9));
+				s.getPp().setType(db.rs.getString(10));
+				s.setID(db.rs.getInt("productID"));
+				s.setStoreID(db.rs.getInt("storeID"));
+				s.setPrice(db.rs.getInt("price"));
+				s.setQuantity(db.rs.getInt("quantity"));
+				s.setViews(db.rs.getInt("views"));
+				s.getBrand().setbName(db.rs.getString(12));
+				s.getBrand().setbCatagry(db.rs.getString(13));
+				if(s.getQuantity() > 0)
+					prods.add(s);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return prods;
+	}
+	public void deleteProduct(product p) throws SQLException {
+		String q1="select * from productStore where productID = "+p.getID()+" and storeID = "+p.getStoreID();
+		db.rs = db.st.executeQuery(q1);
+		db.rs.next();
+		int quantity = db.rs.getInt("quantity");
+		int brandID = db.rs.getInt("brandID");
+		int views = db.rs.getInt("views");
+		int price = db.rs.getInt("price");
+		String q="DELETE FROM productStore WHERE productID = "+p.getID()+" and storeID = "+p.getStoreID();
+		db.st.executeUpdate(q);
+		q = "insert into updates (pID,sID,updateType,changer) values(" +p.getID()+  
+	            ", " +p.getStoreID()+ ", 'delete' , '" +curr.getLoginInfo().getUsername()+"')";
+		db.st.executeUpdate(q);
+		q = "select uID from updates where pID = "+p.getID()+" and sID = "+p.getStoreID()+" and changer = '"+curr.getLoginInfo().getUsername()+"')";
+		db.rs = db.st.executeQuery(q1);
+		db.rs.next();
+		int uID = db.rs.getInt("uID");
+		q = "SET IDENTITY_INSERT oldproducts ON insert into oldproducts (updateID,productID,storeID,quantity,brandID,views,price) values("+uID+ "," +p.getID()+  
+	    ", " +p.getStoreID()+ ", " +quantity+", " +brandID+", " +views+", "+ price+ ")";
+		db.st.executeUpdate(q);
+	}
+	public void	editProduct(product p) throws SQLException {
+		String q1="select * from productStore where productID = "+p.getID()+" and storeID = "+p.getStoreID();
+		db.rs = db.st.executeQuery(q1);
+		db.rs.next();
+		int quantity = db.rs.getInt("quantity");
+		int brandID = db.rs.getInt("brandID");
+		int views = db.rs.getInt("views");
+		int price = db.rs.getInt("price");
+		String q="update productStore set quantity = "+p.getQuantity()+" , brandID = "+p.getBrand().getID()+" , price = "+p.getPrice()+ " where productID = "+p.getID()+" and storeID = "+p.getStoreID();
+		db.st.executeUpdate(q);
+		q = "insert into updates (pID,sID,updateType,changer) values(" +p.getID()+  
+	            ", " +p.getStoreID()+ ", 'edit' , '" +curr.getLoginInfo().getUsername()+"')";
+		db.st.executeUpdate(q);
+		q = "select uID from updates where pID = "+p.getID()+" and sID = "+p.getStoreID()+" and changer = '"+curr.getLoginInfo().getUsername()+"')";
+		db.rs = db.st.executeQuery(q1);
+		db.rs.next();
+		int uID = db.rs.getInt("uID");
+		q = "SET IDENTITY_INSERT oldproducts ON insert into oldproducts (updateID,productID,storeID,quantity,brandID,views,price) values("+uID+ "," + +p.getID()+  
+	    ", " +p.getStoreID()+ ", " +quantity+", " +brandID+", " +views+", "+ price+ ")";
+		db.st.executeUpdate(q);
 	}
 	public void  addproductToStore(product p,int storeID) throws SQLException, ClassNotFoundException{
 		int productID = getProductID(p.getPp().getName());
