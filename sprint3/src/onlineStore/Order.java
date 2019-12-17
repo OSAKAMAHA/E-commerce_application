@@ -2,7 +2,7 @@ package onlineStore;
 
 public class Order {
 	product Product;
-	client Owner;
+	business Owner;
 	int ammount;
 	String shippingAddress;
 	public product getProduct() {
@@ -11,10 +11,10 @@ public class Order {
 	public void setProduct(product product) {
 		Product = product;
 	}
-	public client getOwner() {
+	public business getOwner() {
 		return Owner;
 	}
-	public void setOwner(client owner) {
+	public void setOwner(business owner) {
 		Owner = owner;
 	}
 	public int getAmmount() {

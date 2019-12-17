@@ -54,10 +54,11 @@ public user getUser(userLoginInfo info) throws SQLException{
     }
   	if(userinfo.get(8).equals("admin")) {
 		current = new admin();
-	}else if(userinfo.get(8).equals("client")) {
-		current = new client();
 	}else {
 		current = new business();
+		current.setStoreOwner(isStoreOwner(current));
+		current.setStoreCollaborator(isStorecollaborator(current));
+		
 	};
 	//make username and email in their correct place;
 	info.setUsername(userinfo.get(0));
@@ -73,7 +74,7 @@ public user getUser(userLoginInfo info) throws SQLException{
 }
 
 public boolean userNameAvailable(String username) throws SQLException {
-	    String s = "select count(*) from (select username as username from admin union all select username from business union all select username from client) a where username = '"+username+"'";     
+	    String s = "select count(*) from select username from admin where username = '"+username+"'";     
 	    db.rs = db.st.executeQuery(s);
 	    db.rs.next();
 	    if(db.rs.getInt(1) > 0) {
@@ -82,6 +83,26 @@ public boolean userNameAvailable(String username) throws SQLException {
 	    	return true;
 	    }
 	    
+}
+public boolean isStoreOwner(user current) throws SQLException {
+	String s = "select count(*) from (select * from store inner join users on users.ID = store.owner where users.username = '"+current.getLoginInfo().getUsername()+"')";
+	db.rs = db.st.executeQuery(s);
+    db.rs.next();
+    if(db.rs.getInt(1) > 0) {
+    	return true;
+    }else {
+    	return false;
+    }
+}
+public boolean isStorecollaborator(user current) throws SQLException {
+	String s = "select count(*) from (select * from collaborators inner join users on users.ID = collaborators.collaboratorID where users.username = '"+current.getLoginInfo().getUsername()+"')";
+	db.rs = db.st.executeQuery(s);
+    db.rs.next();
+    if(db.rs.getInt(1) > 0) {
+    	return true;
+    }else {
+    	return false;
+    }
 }
 
 }

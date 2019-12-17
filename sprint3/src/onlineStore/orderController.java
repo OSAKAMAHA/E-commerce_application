@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class orderController {
 	orderHandler oh;
-	client current;
+	business current;
 	ArrayList<product> prods;
 	int choice;
-	orderController(client current){
+	orderController(business current){
 		this.current = current;
 		oh = new orderHandler();
 		prods = new ArrayList<product>();

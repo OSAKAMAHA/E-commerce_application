@@ -42,7 +42,7 @@ public class productHandler {
 	    return db.rs.getInt("ID");
 	}
 	public ArrayList<store> getStores(business owner) {
-		String q = "select * from store inner join users on users.ID = store.owner where users.username = '"+owner.getLoginInfo().getUsername()+"' ";
+		String q = "select * from store inner join collaborators on collaborators.collaboratorID = store.ID inner join users on users.ID = collaborators.collaboratorID where users.username = '"+owner.getLoginInfo().getUsername()+"' ";
 		ArrayList<store> ownerstores = new ArrayList<store>();
 		try {
 			db.rs = db.st.executeQuery(q);

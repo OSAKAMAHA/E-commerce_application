@@ -69,7 +69,7 @@ public class orderHandler {
 	 public boolean addOrder(Order ord) {
 		 String q = "insert into orders values(" +ord.getProduct().getID()+  
 		            ", " +ord.getProduct().getStoreID()+ ", '" +ord.getOwner().getLoginInfo().getUsername()+ "',"+
-				 ord.getAmmount()+",'"+ord.getShippingAddress()+"')";
+				 ord.getAmmount()+", "+ord.getProduct().getPrice()+",'"+ord.getShippingAddress()+"')";
 		 	int x = 0;
 			try {
 				x = db.st.executeUpdate(q);

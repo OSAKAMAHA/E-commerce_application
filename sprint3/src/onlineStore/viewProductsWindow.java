@@ -2,8 +2,8 @@ package onlineStore;
 
 import java.util.Scanner;
 
-public class clientWindow {
-	clientWindow(client current){
+public class viewProductsWindow {
+	viewProductsWindow (business current){
 		Scanner sc = new Scanner(System.in);
 		orderController oc= new orderController(current);
 		System.out.println(oc.View());

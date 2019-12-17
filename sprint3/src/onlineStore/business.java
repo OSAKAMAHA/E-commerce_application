@@ -4,6 +4,20 @@ import java.util.ArrayList;
 
 public class business extends user{
 private ArrayList<store> Stores;
+boolean storeOwner;
+boolean storeCollaborator;
+public boolean isStoreOwner() {
+	return storeOwner;
+}
+public void setStoreOwner(boolean storeOwner) {
+	this.storeOwner = storeOwner;
+}
+public boolean isStoreCollaborator() {
+	return storeCollaborator;
+}
+public void setStoreCollaborator(boolean storeCollaborator) {
+	this.storeCollaborator = storeCollaborator;
+}
 business(){
 	super();
 	Stores = new ArrayList<store>();
@@ -31,5 +45,12 @@ public ArrayList<store> getStores() {
 public void setStores(ArrayList<store> stores) {
 	Stores = stores;
 }
-
+public Order makeOrder(product prod,int ammount,String shipping) {
+	Order ord = new Order();
+	ord.setProduct(prod);
+	ord.setOwner(this);
+	ord.setAmmount(ammount);
+	ord.setShippingAddress(shipping);
+	return ord;
+}
 }

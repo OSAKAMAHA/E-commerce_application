@@ -34,7 +34,5 @@ public class productController {
 		product p= owner.makeproduct(pp, Integer.parseInt(price), Integer.parseInt(quantity), 0, brand);
 		ph.addproductToStore(p, storeID);
 		return("product added successfully");
-		
-		
 	}
 }

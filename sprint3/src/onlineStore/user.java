@@ -50,5 +50,6 @@ public void setName(String name) {
 public String getName() {
 	return name;
 }
-
+protected abstract void setStoreOwner(boolean storeOwner);
+protected abstract void setStoreCollaborator(boolean storeOwner);
 }

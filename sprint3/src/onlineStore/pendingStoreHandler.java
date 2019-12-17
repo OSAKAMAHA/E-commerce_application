@@ -26,14 +26,20 @@ public class pendingStoreHandler {
 	    String location = db.rs.getString("location");
 	    String type = db.rs.getString("type");
 	    System.out.println("got here");
-		String q2="select ID from business where username ='"+username+"' ";
+		String q2="select ID from users where username ='"+username+"' ";
 		db.rs = db.st.executeQuery(q2);
 		db.rs.next();
 		int ownerID = db.rs.getInt(1);
 		String q3 = "insert into store values(" +ownerID + ", '" +location+"', '" +type+"', '" +name+ "')";
 		db.st.executeUpdate(q3);
-		String q4 = "delete from tempStore where ID = "+ID;
-		db.st.executeUpdate(q4);
+		String q4 = "select store.ID from store where name = '"+name+ "' and owner = "+ownerID;
+		db.rs = db.st.executeQuery(q4);
+		db.rs.next();
+		int storeID = db.rs.getInt(1);
+		String q5 = "insert into collaborators values("+ownerID+","+storeID+")";
+		db.st.executeUpdate(q5);
+		String q6 = "delete from tempStore where ID = "+ID;
+		db.st.executeUpdate(q6);
 	}
 	public ArrayList<store> viewPendingApproves(){
 		String q1="select * from tempStore";

@@ -45,3 +45,9 @@
 /adminStatisticsController.class
 /AstatisticsHandler.class
 /statisticsAddWindow.class
+/viewProductsWindow.class
+/addCollaboratorWindow.class
+/collaboratorHandler.class
+/storeOwnerWindow.class
+/storeCollaboratorWindow.class
+/AcollaboratorController.class
