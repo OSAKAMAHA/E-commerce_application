@@ -4,8 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class productHandler {
+	business curr;
 	private dataBaseConnection db;
-	productHandler(){
+	productHandler(business curr){
 		try {
 			db = new dataBaseConnection();
 		} catch (ClassNotFoundException e) {
@@ -15,6 +16,7 @@ public class productHandler {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.curr = curr;
 	}
 	public boolean checkAvailability(String prodName) throws SQLException, ClassNotFoundException{    
 		dataBaseConnection db;
@@ -82,6 +84,8 @@ public class productHandler {
 		String q = "SET IDENTITY_INSERT productStore ON insert into productStore (productID,storeID,quantity,brandID,views,price) values(" +productID+  
 	            ", " +storeID+ ", " +p.getQuantity()+", " +p.getBrand().getID()+", " +0+", " +p.getPrice()+ ")";
 		db.st.executeUpdate(q);
-		
+		 q = "insert into updates (pID,sID,updateType,changer) values(" +productID+  
+	            ", " +storeID+ ", 'add' , '" +curr.getLoginInfo().getUsername()+"')";
+		 db.st.executeUpdate(q);
 	};
 }

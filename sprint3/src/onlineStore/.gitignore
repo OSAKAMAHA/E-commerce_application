@@ -52,3 +52,6 @@
 /storeCollaboratorWindow.class
 /AcollaboratorController.class
 /discountController.class
+/updatesWindow.class
+/updateController.class
+/updateHandler.class

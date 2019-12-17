@@ -11,7 +11,7 @@ public class productController {
 	productController(business owner){
 		this.owner = owner;
 		stores = new ArrayList<store>();
-		ph = new productHandler();
+		ph = new productHandler(owner);
 	}
 	public String ViewStores() {
 		stores = ph.getStores(owner);

@@ -11,7 +11,7 @@ public class statisticsController {
 	statisticsController(business current){
 		this.current = current;
 		sh = new statisticsHandler();
-		ph = new productHandler();
+		ph = new productHandler(current);
 		userStores = ph.getStores(current);
 	}
 	public String views() {
